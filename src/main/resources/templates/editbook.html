@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Book</title>
+</head>
+<body>
+<h2>Edit Book Details</h2>
+<form th:action="@{/editBook/{id}(id=${book.id})}" method="post">
+    <input type="hidden" name="id" th:value="${book.id}" />
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" th:value="${book.name}" />
+    </div>
+    <div>
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author" th:value="${book.author}" />
+    </div>
+    <button type="submit" class="btn btn-primary">Update Book</button>
+</form>
+<a th:href="@{/home?page=1}" class="btn btn-primary">See list of all books</a><br>
+<a th:href="@{/borrowedbooks?page=1}" class="btn btn-primary">See list of borrowed books</a><br>
+<a th:href="@{/freebooks?page=1}" class="btn btn-primary">See list of free books</a><br>
+<a th:href="@{/addbook}" class="btn btn-primary">Add new book</a><br>
+</body>
+</html>
+
+

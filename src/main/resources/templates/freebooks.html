@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>FreeBooks</title>
+</head>
+<body>
+<h3>List of Free Books:</h3>
+<ul>
+    <li th:each="book : ${books}">
+        <span th:text="${book.name}"></span> by <span th:text="${book.author}"></span>
+        <a th:href="@{/borrow/{id}(id=${book.id})}" class="btn btn-success">Borrow</a>
+    </li>
+</ul>
+<div th:if="${totalPages > 0}">
+    <ul>
+        <li th:each="pageNo : ${#numbers.sequence(1, totalPages)}"
+            th:class="${pageNo == pageNum} ? 'active' : ''">
+            <a th:href="@{${'/freebooks?page=' + pageNo}}" th:text="${pageNo}"></a>
+        </li>
+    </ul>
+</div>
+<a th:href="@{/home?page=1}" class="btn btn-primary">See list of all books</a><br>
+<a th:href="@{/borrowedbooks?page=1}" class="btn btn-primary">See list of borrowed books</a><br>
+<a th:href="@{/addbook}" class="btn btn-primary">Add new book</a><br>
+</body>
+</html>

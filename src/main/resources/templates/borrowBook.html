@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Borrow Book</title>
+</head>
+<body>
+<h2>Borrow Book</h2>
+<form th:action="@{'/borrow/' + ${book.id}}" method="post">
+    <input type="hidden" name="id" th:value="${book.id}" />
+    <div>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required/>
+    </div>
+    <div>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required/>
+    </div>
+    <div>
+        <label for="from">From:</label>
+        <input type="date" id="from" name="from" required max="2023-09-22" placeholder="2023-09-22">
+
+    </div>
+    <button type="submit" class="btn btn-success">Confirm Borrow</button>
+</form>
+<a th:href="@{/freebooks?page=1}" class="btn btn-primary">Cancel</a>
+</body>
+</html>
