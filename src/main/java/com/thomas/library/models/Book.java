@@ -3,11 +3,14 @@ package com.thomas.library.models;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
+import javax.persistence.*;
 
 
+@Entity
 @JacksonXmlRootElement(localName = "Book")
 public class Book {
-
+    @Id
+    @GeneratedValue
     @JacksonXmlProperty(localName = "id", isAttribute = true)
     private int id;
 
@@ -17,6 +20,8 @@ public class Book {
     @JacksonXmlProperty(localName = "Author")
     private String author;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "borrowed_id", referencedColumnName = "id")
     @JacksonXmlProperty(localName = "Borrowed")
     private Borrowed borrowed;
 

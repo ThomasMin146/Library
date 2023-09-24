@@ -1,6 +1,7 @@
 package com.thomas.library.controllers;
 
 import com.thomas.library.BookService;
+import com.thomas.library.BorrowedRepository;
 import com.thomas.library.models.Book;
 import com.thomas.library.models.Borrowed;
 import org.springframework.stereotype.Controller;
@@ -10,15 +11,18 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class BorrowBookController {
     private final BookService bookService;
+    private final BorrowedRepository repository;
 
-    public BorrowBookController(BookService bookService) {
+    public BorrowBookController(BookService bookService, BorrowedRepository repository) {
         this.bookService = bookService;
+        this.repository = repository;
     }
 
     @GetMapping("/borrow/{id}")
     public String confirmBorrow(@PathVariable int id, Model model) {
         // Retrieve the book by its ID
         Book book = bookService.getBookById(id);
+        repository.findById((long) id);
 
         // Add the book to the model
         model.addAttribute("book", book);
@@ -41,6 +45,8 @@ public class BorrowBookController {
         book.getBorrowed().setLastName(lastName);
         book.getBorrowed().setFrom(from);
         bookService.updateBook(book);
+
+        repository.save(book.getBorrowed());
 
         // Redirect back to the free books page
         return "redirect:/freebooks?page=1";

@@ -1,5 +1,6 @@
 package com.thomas.library.controllers;
 
+import com.thomas.library.BookRepository;
 import com.thomas.library.BookService;
 import com.thomas.library.models.Book;
 import com.thomas.library.models.Borrowed;
@@ -17,9 +18,11 @@ public class AddBookController {
 
     private static final Logger logger = LogManager.getLogger(AddBookController.class);
     private final BookService bookService;
+    private final BookRepository bookRepository;
 
-    public AddBookController(BookService bookService) {
+    public AddBookController(BookService bookService, BookRepository bookRepository) {
         this.bookService = bookService;
+        this.bookRepository = bookRepository;
     }
     @GetMapping("/addbook")
     public String addBook() throws IOException {
@@ -40,6 +43,7 @@ public class AddBookController {
         try {
             // Add the new book to library (XML file)
             bookService.addNewBook(newBook);
+            bookRepository.save(newBook);
             logger.warn("New book " + newBook.getName() + " has been created by " + newBook.getAuthor() + ".");
             return "redirect:/home?page=1";
         } catch (IOException e) {

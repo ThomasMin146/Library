@@ -22,8 +22,7 @@ import java.io.IOException;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Value("${username}")
-    String username;
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -46,8 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         UserDetails user = User
-                .withUsername("qwe")
-                .password(encoder.encode("asd"))
+                .withUsername("username")
+                .password(encoder.encode("password"))
                 .roles("USER")
                 .build();
 

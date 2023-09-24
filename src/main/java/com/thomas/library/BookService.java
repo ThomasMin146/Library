@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.thomas.library.models.Book;
 import com.thomas.library.models.Borrowed;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.io.File;
@@ -18,10 +19,11 @@ public class BookService {
 
     private final ObjectMapper objectMapper;
     private List<Book> books;
-
-    public BookService() throws IOException {
+    @Autowired
+    public BookService(@Value("${pathToFile}") String pathToFile) throws IOException {
+        //this.pathToFile = pathToFile;
         objectMapper = new XmlMapper();
-        File xmlFile = new File("Library.xml");
+        File xmlFile = new File(pathToFile);
         this.books = objectMapper.readValue(xmlFile, new TypeReference<List<Book>>() {});
     }
 
